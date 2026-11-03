@@ -45,7 +45,7 @@ export function PromptBuilder({ onGenerate }: Props) {
   const clear = () => { setState(EMPTY_PROMPT_BUILDER); setStep(0); };
 
   return (
-    <section className="rounded-2xl border border-border/60 bg-card/60 p-4 space-y-4 shadow-sm">
+    <section className="rounded-2xl border border-border/60 bg-card/60 p-4 space-y-4 shadow-sm min-h-fit">
       <div className="flex items-start justify-between gap-3">
         <div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Constructor guiado</p><h3 className="text-base font-semibold">Diseña un prompt profesional</h3></div>
         <span className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-semibold text-primary">{score}/10</span>

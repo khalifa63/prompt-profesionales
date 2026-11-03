@@ -110,8 +110,8 @@ export default function Home() {
             />
           </aside>
 
-          <main className="flex-1 flex flex-col bg-background/40">
-            <div className="mx-auto w-full max-w-3xl px-4 md:px-6 pt-4"><PromptBuilder onGenerate={(text) => window.dispatchEvent(new CustomEvent("prompt-builder-generate", { detail: text }))} /></div>
+          <main className="flex-1 min-w-0 flex flex-col bg-background/40 overflow-y-auto">
+            <div className="mx-auto w-full max-w-3xl px-4 md:px-6 pt-4 pb-3 shrink-0"><PromptBuilder onGenerate={(text) => window.dispatchEvent(new CustomEvent("prompt-builder-generate", { detail: text }))} /></div>
             <ChatInterface
               model={selectedModel}
               context={{
