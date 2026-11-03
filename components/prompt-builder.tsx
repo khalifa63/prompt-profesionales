@@ -52,13 +52,13 @@ export function PromptBuilder({ onGenerate }: Props) {
       saved[category] = { state, draft, updatedAt: new Date().toISOString() };
       const nextState = saved[label]?.state
         ? { ...EMPTY_PROMPT_BUILDER, ...saved[label].state }
-        : { ...EMPTY_PROMPT_BUILDER, ...values };
+        : { ...EMPTY_PROMPT_BUILDER };
       setCategory(label);
       setState(nextState);
       setStep(0);
     } catch {
       setCategory(label);
-      setState({ ...EMPTY_PROMPT_BUILDER, ...values });
+      setState({ ...EMPTY_PROMPT_BUILDER });
       setStep(0);
     }
   };
