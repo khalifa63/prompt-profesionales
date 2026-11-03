@@ -66,3 +66,8 @@ El constructor guarda localmente en el navegador el último borrador y prompt de
 ## Por qué importa un buen prompt
 
 Un prompt claro transforma una intención en instrucciones concretas. Definir rol, objetivo, contexto, formato y restricciones reduce ambigüedad, evita respuestas inventadas y hace que los resultados sean más consistentes, comparables y reutilizables.
+
+
+## SEO e indexación
+
+La app incluye metadata dinámica, canonical, Open Graph, Twitter Cards, datos estructurados `WebApplication`, `sitemap.xml`, `robots.txt` y una imagen social generada. Define `NEXT_PUBLIC_SITE_URL` con el dominio público real y opcionalmente `GOOGLE_SITE_VERIFICATION` antes del build. Registra `/sitemap.xml` en Google Search Console y Bing Webmaster Tools. No se indexan `/api/` ni recursos internos.
