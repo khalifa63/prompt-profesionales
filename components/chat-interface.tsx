@@ -58,6 +58,7 @@ export function ChatInterface({ model, context }: ChatInterfaceProps) {
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [lastRequest, setLastRequest] = useState<string>("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -145,9 +146,18 @@ export function ChatInterface({ model, context }: ChatInterfaceProps) {
       role: "user",
       content: text,
     };
+    setLastRequest(text);
     const next = [...messages, userMsg];
     setMessages(next);
     setInput("");
+    run(next, "generate");
+  };
+
+  const regenerate = () => {
+    if (!lastRequest || busy) return;
+    const userMsg: Message = { id: `u-${Date.now()}`, role: "user", content: lastRequest };
+    const next = [...messages, userMsg];
+    setMessages(next);
     run(next, "generate");
   };
 
@@ -365,7 +375,7 @@ export function ChatInterface({ model, context }: ChatInterfaceProps) {
               }}
             />
             <div className="absolute right-2.5 bottom-2.5 flex items-center gap-1.5">
-              {messages.length > 0 && !busy && (
+              {messages.length > 0 && !busy && lastRequest && (
                 <button
                   type="button"
                   onClick={reset}
@@ -374,6 +384,9 @@ export function ChatInterface({ model, context }: ChatInterfaceProps) {
                 >
                   <RotateCcw className="h-4 w-4" />
                 </button>
+              )}
+              {!busy && lastRequest && messages.length > 0 && (
+                <button type="button" onClick={regenerate} title="Regenerar con el modelo seleccionado" className="h-9 px-2 rounded-xl text-xs font-medium text-primary hover:bg-primary/10 transition-colors">↻ Regenerar</button>
               )}
               {busy ? (
                 <Button

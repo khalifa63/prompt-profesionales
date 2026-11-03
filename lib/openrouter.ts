@@ -15,12 +15,6 @@ export interface PromptContext {
 /** Modelos verificados contra OpenRouter (2026-10). Los antiguos daban 404. */
 export const AVAILABLE_MODELS = [
   {
-    id: "deepseek/deepseek-r1",
-    name: "DeepSeek R1",
-    description: "Mejor razonamiento; parte del free tier de OpenRouter",
-    badge: "Free / Top",
-  },
-  {
     id: "meta-llama/llama-3.3-70b-instruct",
     name: "Llama 3.3 70B",
     description: "Modelo open-source grande; alta calidad en free tier",
@@ -58,7 +52,7 @@ export const AVAILABLE_MODELS = [
   },
 ] as const;
 
-export const DEFAULT_MODEL = AVAILABLE_MODELS[0].id; // DeepSeek R1 (mejor free)
+export const DEFAULT_MODEL = "deepseek/deepseek-chat"; // Modelo disponible y económico
 
 /** Límite de seguridad para evitar reventar la ventana de contexto. */
 export const MAX_CONTEXT_CHARS = 8000;
