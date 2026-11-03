@@ -1,11 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check, ChevronLeft, ChevronRight, RotateCcw, Wand2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { EMPTY_PROMPT_BUILDER, PROMPT_BUILDER_STEPS, buildPromptDraft, scorePromptDraft, type PromptBuilderState } from "../lib/prompt-builder";
+
+const STORAGE_KEY = "prompt-profesionales:last-by-category";
 
 const TEMPLATES: Array<{ label: string; values: Partial<PromptBuilderState> }> = [
   { label: "Marketing", values: { role: "Estratega senior de marketing digital", audience: "Responsables de marketing", outputFormat: "Tabla con estrategia, canal, mensaje y KPI" } },
@@ -20,11 +22,26 @@ interface Props { onGenerate: (text: string) => void; }
 export function PromptBuilder({ onGenerate }: Props) {
   const [state, setState] = useState<PromptBuilderState>(EMPTY_PROMPT_BUILDER);
   const [step, setStep] = useState(0);
+  const [category, setCategory] = useState("General");
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      if (saved[category]) setState({ ...EMPTY_PROMPT_BUILDER, ...saved[category].state });
+    } catch { /* almacenamiento local no disponible */ }
+  }, [category]);
+
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...saved, [category]: { state, draft, updatedAt: new Date().toISOString() } }));
+    } catch { /* almacenamiento local no disponible */ }
+  }, [category, state, draft]);
   const current = PROMPT_BUILDER_STEPS[step];
   const score = useMemo(() => scorePromptDraft(state), [state]);
   const draft = useMemo(() => buildPromptDraft(state), [state]);
   const update = (key: keyof PromptBuilderState, value: string) => setState((prev) => ({ ...prev, [key]: value }));
-  const applyTemplate = (values: Partial<PromptBuilderState>) => setState((prev) => ({ ...prev, ...values }));
+  const applyTemplate = (values: Partial<PromptBuilderState>, label: string) => { setCategory(label); setState((prev) => ({ ...prev, ...values })); };
   const clear = () => { setState(EMPTY_PROMPT_BUILDER); setStep(0); };
 
   return (
@@ -33,10 +50,11 @@ export function PromptBuilder({ onGenerate }: Props) {
         <div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Constructor guiado</p><h3 className="text-base font-semibold">Diseña un prompt profesional</h3></div>
         <span className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-semibold text-primary">{score}/10</span>
       </div>
-      <div className="flex flex-wrap gap-1.5">{TEMPLATES.map((template) => <button key={template.label} type="button" onClick={() => applyTemplate(template.values)} className="rounded-full border border-border px-2.5 py-1 text-[11px] hover:border-primary/50 hover:bg-primary/5">{template.label}</button>)}</div>
+      <div className="flex flex-wrap gap-1.5 pt-1 pb-2">{TEMPLATES.map((template) => <button key={template.label} type="button" onClick={() => applyTemplate(template.values, template.label)} className="rounded-full border border-border px-2.5 py-1 text-[11px] hover:border-primary/50 hover:bg-primary/5">{template.label}</button>)}</div>
+      <div className="text-[10px] text-muted-foreground">Última interacción guardada localmente: <span className="font-medium text-foreground">{category}</span></div>
       <div className="flex items-center gap-2 text-[11px] text-muted-foreground"><span className="font-medium text-foreground">{step + 1}/{PROMPT_BUILDER_STEPS.length}</span><span>{current.title}</span><div className="h-1 flex-1 rounded-full bg-muted"><div className="h-1 rounded-full bg-primary transition-all" style={{ width: `${((step + 1) / PROMPT_BUILDER_STEPS.length) * 100}%` }} /></div></div>
       <div className="space-y-2"><label className="text-xs font-medium">{current.title}</label><p className="text-[11px] text-muted-foreground">{current.hint}</p>{current.key === "role" ? <div className="grid gap-2"><Input value={state.role} onChange={(e) => update("role", e.target.value)} placeholder="Ej. Analista financiero senior" /><Input value={state.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Audiencia o usuario final" /></div> : <Textarea value={state[current.key]} onChange={(e) => update(current.key, e.target.value)} placeholder="Escribe aquí los detalles..." className="min-h-24 resize-y" />}</div>
-      <div className="flex justify-between gap-2"><Button type="button" variant="ghost" size="sm" onClick={clear}><RotateCcw className="mr-1 h-3.5 w-3.5" />Limpiar</Button><div className="flex gap-2">{step > 0 && <Button type="button" variant="outline" size="sm" onClick={() => setStep(step - 1)}><ChevronLeft className="mr-1 h-3.5 w-3.5" />Atrás</Button>}{step < PROMPT_BUILDER_STEPS.length - 1 ? <Button type="button" size="sm" onClick={() => setStep(step + 1)}>Siguiente<ChevronRight className="ml-1 h-3.5 w-3.5" /></Button> : <Button type="button" size="sm" onClick={() => onGenerate(draft)} disabled={!state.objective.trim()}><Wand2 className="mr-1 h-3.5 w-3.5" />Generar</Button>}</div></div>
+      <div className="flex justify-between gap-2 pt-3 mt-2 border-t border-border/40"><Button type="button" variant="ghost" size="sm" onClick={clear}><RotateCcw className="mr-1 h-3.5 w-3.5" />Limpiar</Button><div className="flex gap-2">{step > 0 && <Button type="button" variant="outline" size="sm" onClick={() => setStep(step - 1)}><ChevronLeft className="mr-1 h-3.5 w-3.5" />Atrás</Button>}{step < PROMPT_BUILDER_STEPS.length - 1 ? <Button type="button" size="sm" onClick={() => setStep(step + 1)}>Siguiente<ChevronRight className="ml-1 h-3.5 w-3.5" /></Button> : <Button type="button" size="sm" onClick={() => onGenerate(draft)} disabled={!state.objective.trim()}><Wand2 className="mr-1 h-3.5 w-3.5" />Generar</Button>}</div></div>
       {draft && <div className="rounded-lg bg-muted/50 p-2 text-[10px] text-muted-foreground"><Check className="mr-1 inline h-3 w-3 text-emerald-500" />Borrador preparado; puedes revisarlo antes de generar.</div>}
     </section>
   );

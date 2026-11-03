@@ -41,3 +41,8 @@ La aplicación permite adjuntar archivos de texto o PDF desde la sección Base d
 ## Plantilla de viajes
 
 El botón Viajes prepara un prompt para itinerarios personalizados. Completa destino, fechas, presupuesto y preferencias usando los marcadores `[DESTINO]`, `[FECHAS]`, `[PRESUPUESTO]` y `[PREFERENCIAS]`; después genera el prompt y verifica precios, horarios y disponibilidad.
+
+
+## Últimas interacciones
+
+El constructor guarda localmente en el navegador el último borrador y prompt de cada categoría. Al regresar al proyecto desde el mismo navegador, se recupera automáticamente el último estado. Los datos no se envían a un servidor ni se comparten; se eliminan al limpiar los datos del sitio o usar el botón Limpiar.
