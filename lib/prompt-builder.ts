@@ -48,5 +48,5 @@ export function buildPromptDraft(state: PromptBuilderState): string {
 
 export function scorePromptDraft(state: PromptBuilderState): number {
   const checks = [state.objective, state.role, state.context, state.instructions, state.outputFormat, state.qualityCriteria, state.constraints, state.audience];
-  return Math.round((checks.filter((value) => value.trim().length > 0).length / checks.length) * 10);
+  return Math.min(10, Math.round((checks.filter((value) => value.trim().length > 0).length / checks.length) * 10));
 }

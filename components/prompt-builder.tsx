@@ -61,7 +61,7 @@ export function PromptBuilder({ onGenerate }: Props) {
     <section className="rounded-2xl border border-border/60 bg-card/60 p-4 space-y-4 shadow-sm min-h-fit">
       <div className="flex items-start justify-between gap-3">
         <div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Constructor guiado</p><h3 className="text-base font-semibold">Diseña un prompt profesional</h3></div>
-        <span className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-semibold text-primary">{score}/10</span>
+        <span className="rounded-full bg-primary/10 px-2 py-1 text-[11px] font-semibold text-primary">Calidad {score}/10</span>
       </div>
       <div className="flex flex-wrap gap-1.5 pt-1 pb-2">{TEMPLATES.map((template) => <button key={template.label} type="button" aria-pressed={category === template.label} onClick={() => applyTemplate(template.values, template.label)} className={`rounded-full border px-2.5 py-1 text-[11px] transition-colors ${category === template.label ? "border-primary bg-primary text-primary-foreground shadow-sm" : "border-border hover:border-primary/50 hover:bg-primary/5"}`}>{category === template.label ? "✓ " : ""}{template.label}</button>)}</div>
       <div className="text-[10px] text-muted-foreground">Contexto activo · última interacción guardada: <span className="font-medium text-foreground">{category}</span></div>
