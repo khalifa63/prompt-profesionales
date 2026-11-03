@@ -1,6 +1,6 @@
 "use client"
 
-import { BookOpen, FileText, Loader2, Sparkles } from "lucide-react"
+import { BookOpen, FileText, Loader2, Sparkles, Upload, X } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
@@ -54,6 +54,28 @@ export function ContextSidebar({
               value={context.domain}
               onChange={(e) => onContextChange({ ...context, domain: e.target.value })}
             />
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-medium text-foreground/80">Archivos de contexto</label>
+            <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-primary/30 bg-primary/5 px-3 py-3 text-xs hover:bg-primary/10">
+              <Upload className="h-4 w-4 text-primary" /> Subir TXT, MD, CSV, JSON o PDF
+              <input type="file" accept=".txt,.md,.csv,.json,.js,.ts,.tsx,.py,.pdf,text/plain,application/pdf" className="hidden" onChange={async (e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                if (file.size > 5 * 1024 * 1024) { alert("El archivo supera el límite de 5 MB."); return; }
+                const form = new FormData(); form.append("file", file);
+                try {
+                  const response = await fetch("/api/files", { method: "POST", body: form });
+                  const data = await response.json();
+                  if (!response.ok) throw new Error(data.error || "No se pudo leer el archivo.");
+                  onContextChange({ ...context, customText: `${context.customText}${context.customText ? "\n\n" : ""}[Archivo: ${data.name}]\n${data.text}`, uploadedFile: data.name });
+                } catch (error: any) { alert(error?.message || "No se pudo leer el archivo."); }
+                e.currentTarget.value = "";
+              }} />
+            </label>
+            {context.uploadedFile && <div className="flex items-center justify-between rounded-md bg-muted/50 px-2 py-1.5 text-[10px]"><span className="truncate">{context.uploadedFile}</span><button type="button" onClick={() => onContextChange({ ...context, uploadedFile: "" })} aria-label="Quitar archivo"><X className="h-3 w-3" /></button></div>}
+            <p className="text-[10px] text-muted-foreground">Máximo 5 MB. El contenido se procesa temporalmente y se añade al contexto.</p>
           </div>
 
           <div className="space-y-2">

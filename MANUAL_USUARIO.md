@@ -25,3 +25,8 @@ Para crear prompts reutilizables usa marcadores como `[PRODUCTO]`, `[AUDIENCIA]`
 ## Modelos gratuitos
 
 DeepSeek R1, Llama 3.3 70B y Mistral 7B pueden estar disponibles en el free tier de OpenRouter. Sus límites, disponibilidad y velocidad pueden cambiar; si falla una solicitud, prueba otro modelo o espera a que se renueve el límite.
+
+
+## Carga de archivos
+
+La aplicación permite adjuntar archivos de texto o PDF desde la sección Base de Conocimiento. Se aceptan TXT, Markdown, CSV, JSON y código, además de PDF. El límite es 5 MB por archivo y el contenido se procesa temporalmente, limitado a 8.000 caracteres para el contexto del modelo. No se almacenan archivos permanentemente.

@@ -46,3 +46,8 @@ El modelo predeterminado es DeepSeek R1. La lista se centraliza en `lib/openrout
 ## Seguridad
 
 La clave de OpenRouter debe permanecer en el servidor. El endpoint valida el modelo y limita el contexto. Los datos de repositorios deben ser públicos y no contener secretos.
+
+
+## Carga de archivos
+
+La aplicación permite adjuntar archivos de texto o PDF desde la sección Base de Conocimiento. Se aceptan TXT, Markdown, CSV, JSON y código, además de PDF. El límite es 5 MB por archivo y el contenido se procesa temporalmente, limitado a 8.000 caracteres para el contexto del modelo. No se almacenan archivos permanentemente.

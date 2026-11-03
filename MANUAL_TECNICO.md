@@ -31,3 +31,8 @@ Si el proceso usa otro usuario, deténlo con ese usuario o mediante el superviso
 ## Mantenimiento
 
 No versionar `.env.local`, logs ni `.next`. Validar con `npm run build` antes de publicar. Los cambios de UI deben verificarse en escritorio y móvil.
+
+
+## Carga de archivos
+
+La aplicación permite adjuntar archivos de texto o PDF desde la sección Base de Conocimiento. Se aceptan TXT, Markdown, CSV, JSON y código, además de PDF. El límite es 5 MB por archivo y el contenido se procesa temporalmente, limitado a 8.000 caracteres para el contexto del modelo. No se almacenan archivos permanentemente.
