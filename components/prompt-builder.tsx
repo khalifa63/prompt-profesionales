@@ -23,6 +23,9 @@ export function PromptBuilder({ onGenerate }: Props) {
   const [state, setState] = useState<PromptBuilderState>(EMPTY_PROMPT_BUILDER);
   const [step, setStep] = useState(0);
   const [category, setCategory] = useState("General");
+  const current = PROMPT_BUILDER_STEPS[step];
+  const score = useMemo(() => scorePromptDraft(state), [state]);
+  const draft = useMemo(() => buildPromptDraft(state), [state]);
 
   useEffect(() => {
     try {
@@ -37,9 +40,6 @@ export function PromptBuilder({ onGenerate }: Props) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...saved, [category]: { state, draft, updatedAt: new Date().toISOString() } }));
     } catch { /* almacenamiento local no disponible */ }
   }, [category, state, draft]);
-  const current = PROMPT_BUILDER_STEPS[step];
-  const score = useMemo(() => scorePromptDraft(state), [state]);
-  const draft = useMemo(() => buildPromptDraft(state), [state]);
   const update = (key: keyof PromptBuilderState, value: string) => setState((prev) => ({ ...prev, [key]: value }));
   const applyTemplate = (values: Partial<PromptBuilderState>, label: string) => { setCategory(label); setState((prev) => ({ ...prev, ...values })); };
   const clear = () => { setState(EMPTY_PROMPT_BUILDER); setStep(0); };
