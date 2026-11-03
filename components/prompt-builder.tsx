@@ -41,7 +41,23 @@ export function PromptBuilder({ onGenerate }: Props) {
     } catch { /* almacenamiento local no disponible */ }
   }, [category, state, draft]);
   const update = (key: keyof PromptBuilderState, value: string) => setState((prev) => ({ ...prev, [key]: value }));
-  const applyTemplate = (values: Partial<PromptBuilderState>, label: string) => { setCategory(label); setState((prev) => ({ ...prev, ...values })); };
+  const applyTemplate = (values: Partial<PromptBuilderState>, label: string) => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      saved[category] = { state, draft, updatedAt: new Date().toISOString() };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+      const nextState = saved[label]?.state
+        ? { ...EMPTY_PROMPT_BUILDER, ...saved[label].state }
+        : { ...EMPTY_PROMPT_BUILDER, ...values };
+      setCategory(label);
+      setState(nextState);
+      setStep(0);
+    } catch {
+      setCategory(label);
+      setState({ ...EMPTY_PROMPT_BUILDER, ...values });
+      setStep(0);
+    }
+  };
   const clear = () => { setState(EMPTY_PROMPT_BUILDER); setStep(0); };
 
   return (
