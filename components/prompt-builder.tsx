@@ -27,13 +27,6 @@ export function PromptBuilder({ onGenerate }: Props) {
   const score = useMemo(() => scorePromptDraft(state), [state]);
   const draft = useMemo(() => buildPromptDraft(state), [state]);
 
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      if (saved[category]) setState({ ...EMPTY_PROMPT_BUILDER, ...saved[category].state });
-    } catch { /* almacenamiento local no disponible */ }
-  }, [category]);
-
   const persistCurrent = (nextState: PromptBuilderState = state) => {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
@@ -50,15 +43,15 @@ export function PromptBuilder({ onGenerate }: Props) {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       saved[category] = { state, draft, updatedAt: new Date().toISOString() };
-      const nextState = saved[label]?.state
-        ? { ...EMPTY_PROMPT_BUILDER, ...saved[label].state }
-        : { ...EMPTY_PROMPT_BUILDER };
-      setCategory(label);
+      const stored = saved[label]?.state;
+      const nextState = stored ? { ...EMPTY_PROMPT_BUILDER, ...stored } : { ...EMPTY_PROMPT_BUILDER };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
       setState(nextState);
+      setCategory(label);
       setStep(0);
     } catch {
-      setCategory(label);
       setState({ ...EMPTY_PROMPT_BUILDER });
+      setCategory(label);
       setStep(0);
     }
   };
