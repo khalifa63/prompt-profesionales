@@ -40,3 +40,8 @@ El botón Viajes prepara un prompt para itinerarios personalizados. Completa des
 ## Últimas interacciones
 
 El constructor guarda localmente en el navegador el último borrador y prompt de cada categoría. Al regresar al proyecto desde el mismo navegador, se recupera automáticamente el último estado. Los datos no se envían a un servidor ni se comparten; se eliminan al limpiar los datos del sitio o usar el botón Limpiar.
+
+
+## Por qué importa un buen prompt
+
+Un prompt claro transforma una intención en instrucciones concretas. Definir rol, objetivo, contexto, formato y restricciones reduce ambigüedad, evita respuestas inventadas y hace que los resultados sean más consistentes, comparables y reutilizables.

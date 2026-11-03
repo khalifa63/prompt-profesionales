@@ -155,10 +155,11 @@ export default function AyudaPage() {
             Guía de uso
           </h1>
           <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-2xl">
-            Prompt Profesionales convierte una idea en un prompt estructurado, con rol,
-            objetivo, instrucciones, formato de salida y criterios de calidad. Esta guía
-            explica cómo aprovecharlo al máximo.
+            Un buen prompt es importante porque convierte una intención general en instrucciones claras, verificables y útiles para el modelo. Cuando defines el contexto, el objetivo y el formato de salida, reduces respuestas ambiguas, evitas que el modelo invente información y obtienes resultados más consistentes que puedes reutilizar.
           </p>
+          <div className="mt-5 rounded-xl border border-primary/20 bg-primary/5 p-4 max-w-2xl">
+            <p className="text-xs leading-relaxed text-foreground/80"><strong className="text-foreground">La idea clave:</strong> la calidad de la respuesta depende en gran medida de la calidad de las instrucciones. Prompt Profesionales te ayuda a pasar de una petición vaga a un prompt estructurado y listo para usar.</p>
+          </div>
         </header>
 
         {/* Anatomía */}
