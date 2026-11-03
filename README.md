@@ -51,3 +51,8 @@ La clave de OpenRouter debe permanecer en el servidor. El endpoint valida el mod
 ## Carga de archivos
 
 La aplicación permite adjuntar archivos de texto o PDF desde la sección Base de Conocimiento. Se aceptan TXT, Markdown, CSV, JSON y código, además de PDF. El límite es 5 MB por archivo y el contenido se procesa temporalmente, limitado a 8.000 caracteres para el contexto del modelo. No se almacenan archivos permanentemente.
+
+
+## Plantilla de viajes
+
+El botón Viajes prepara un prompt para itinerarios personalizados. Completa destino, fechas, presupuesto y preferencias usando los marcadores `[DESTINO]`, `[FECHAS]`, `[PRESUPUESTO]` y `[PREFERENCIAS]`; después genera el prompt y verifica precios, horarios y disponibilidad.
