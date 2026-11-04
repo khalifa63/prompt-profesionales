@@ -110,9 +110,9 @@ export default function Home() {
             />
           </aside>
 
-          <main className="flex-1 min-w-0 flex flex-col bg-background/40 overflow-y-auto">
-            <div className="mx-auto w-full max-w-3xl px-4 md:px-6 pt-4 pb-3 shrink-0"><PromptBuilder onGenerate={(text) => window.dispatchEvent(new CustomEvent("prompt-builder-generate", { detail: text }))} /></div>
-            <ChatInterface
+          <main className="flex-1 min-w-0 flex flex-col bg-background/40 overflow-hidden">
+            <div className="shrink-0 max-h-[calc(100vh-5rem)] overflow-y-auto border-b border-border/40"><div className="mx-auto w-full max-w-3xl px-4 md:px-6 pt-4 pb-3"><PromptBuilder onGenerate={(text) => window.dispatchEvent(new CustomEvent("prompt-builder-generate", { detail: text }))} /></div></div>
+            <div className="min-h-0 flex-1 overflow-hidden"><ChatInterface
               model={selectedModel}
               context={{
                 domain: context.domain,
@@ -120,7 +120,7 @@ export default function Home() {
                 repoName,
                 files: context.repoFiles,
               }}
-            />
+            /></div>
           </main>
         </div>
       </div>
