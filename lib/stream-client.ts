@@ -12,6 +12,7 @@ export interface GeneratePayload {
     customText?: string;
     repoName?: string;
     files?: string[];
+    image?: { name: string; mime: string; dataUrl: string };
   };
   mode?: "generate" | "refine";
 }

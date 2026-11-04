@@ -56,3 +56,8 @@ Un prompt claro transforma una intención en instrucciones concretas. Definir ro
 ## SEO e indexación
 
 La app incluye metadata dinámica, canonical, Open Graph, Twitter Cards, datos estructurados `WebApplication`, `sitemap.xml`, `robots.txt` y una imagen social generada. Define `NEXT_PUBLIC_SITE_URL` con el dominio público real y opcionalmente `GOOGLE_SITE_VERIFICATION` antes del build. Registra `/sitemap.xml` en Google Search Console y Bing Webmaster Tools. No se indexan `/api/` ni recursos internos.
+
+
+## Carga de imágenes
+
+En Base de Conocimiento se pueden adjuntar imágenes JPG, JPEG, PNG, GIF, WebP, BMP, TIFF, SVG y AVIF, además de texto y PDF. El límite es 5 MB por archivo. La imagen se previsualiza y se envía como contexto multimodal al modelo seleccionado cuando el proveedor lo admite; el contenido se procesa temporalmente y no se almacena permanentemente.

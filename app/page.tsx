@@ -119,6 +119,7 @@ export default function Home() {
                 customText: context.customText,
                 repoName,
                 files: context.repoFiles,
+                image: context.uploadedImage,
               }}
             /></div>
           </main>

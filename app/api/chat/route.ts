@@ -63,6 +63,9 @@ export async function POST(req: NextRequest) {
     files: Array.isArray(body?.context?.files)
       ? body.context.files.filter((f: unknown) => typeof f === "string")
       : undefined,
+    image: body?.context?.image && typeof body.context.image.dataUrl === "string"
+      ? { name: String(body.context.image.name || "imagen"), mime: String(body.context.image.mime || "image/jpeg"), dataUrl: body.context.image.dataUrl.slice(0, 7_000_000) }
+      : undefined,
   };
 
   const refine = body?.mode === "refine";

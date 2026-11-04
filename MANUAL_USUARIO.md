@@ -45,3 +45,8 @@ El constructor guarda localmente en el navegador el último borrador y prompt de
 ## Por qué importa un buen prompt
 
 Un prompt claro transforma una intención en instrucciones concretas. Definir rol, objetivo, contexto, formato y restricciones reduce ambigüedad, evita respuestas inventadas y hace que los resultados sean más consistentes, comparables y reutilizables.
+
+
+## Carga de imágenes
+
+En Base de Conocimiento se pueden adjuntar imágenes JPG, JPEG, PNG, GIF, WebP, BMP, TIFF, SVG y AVIF, además de texto y PDF. El límite es 5 MB por archivo. La imagen se previsualiza y se envía como contexto multimodal al modelo seleccionado cuando el proveedor lo admite; el contenido se procesa temporalmente y no se almacena permanentemente.
