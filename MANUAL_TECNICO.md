@@ -40,7 +40,7 @@ La aplicación permite adjuntar archivos de texto o PDF desde la sección Base d
 
 ## Plantilla de viajes
 
-El botón Viajes prepara un prompt para itinerarios personalizados. Completa destino, fechas, presupuesto y preferencias usando los marcadores `[DESTINO]`, `[FECHAS]`, `[PRESUPUESTO]` y `[PREFERENCIAS]`; después genera el prompt y verifica precios, horarios y disponibilidad.
+El botón Finanzas prepara un prompt para itinerarios personalizados. Completa destino, fechas, presupuesto y preferencias usando los marcadores `[DESTINO]`, `[FECHAS]`, `[PRESUPUESTO]` y `[PREFERENCIAS]`; después genera el prompt y verifica precios, horarios y disponibilidad.
 
 
 ## Últimas interacciones
